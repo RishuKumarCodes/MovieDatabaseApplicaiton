@@ -4,7 +4,6 @@ import { useMovieFilters } from "./hooks/useMovieFilters.jsx";
 import MovieModal from "./components/MovieModal";
 import Header from "./components/Header";
 import MovieGrid from "./components/MovieGrid";
-import { ErrorMessage } from "./components/UIComponents";
 
 function App() {
   const [selectedMovie, setSelectedMovie] = useState(null);
