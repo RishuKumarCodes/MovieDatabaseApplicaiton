@@ -1,0 +1,50 @@
+const API_KEY = "156c5f29";
+const OMDB_BASE_URL = "http://www.omdbapi.com/";
+
+export const omdbService = {
+  async searchMovies(query) {
+    const response = await fetch(
+      `${OMDB_BASE_URL}?s=${encodeURIComponent(query)}&apikey=${API_KEY}&type=movie`
+    );
+    
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    
+    return await response.json();
+  },
+
+  async getMovieDetails(imdbID) {
+    const response = await fetch(
+      `${OMDB_BASE_URL}?i=${imdbID}&apikey=${API_KEY}`
+    );
+    
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    
+    return await response.json();
+  },
+
+  formatMovieData(detailData) {
+    return {
+      id: detailData.imdbID,
+      movie: detailData.Title,
+      director: detailData.Director,
+      year: detailData.Year,
+      rating: detailData.imdbRating,
+      genre: detailData.Genre ? detailData.Genre.split(", ") : [],
+      duration: detailData.Runtime,
+      image: detailData.Poster !== "N/A" ? detailData.Poster : null,
+      plot: detailData.Plot,
+      rated: detailData.Rated,
+      country: detailData.Country,
+      language: detailData.Language,
+      actors: detailData.Actors,
+      writer: detailData.Writer,
+      awards: detailData.Awards,
+      boxOffice: detailData.BoxOffice,
+      production: detailData.Production,
+    };
+  }
+};
